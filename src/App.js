@@ -1,11 +1,14 @@
-import logo from './logo.svg';
+import "bootstrap/dist/css/bootstrap.min.css"
+import MainComponent from './MainComponent.jsx';
+import { BrowserRouter } from "react-router-dom";
 import './App.css';
-
 function App() {
   return (
-    <div className="App">
-     <h1>This is a photo-gallery-app</h1>
-     <p>On making...</p>
+    <div>
+      <BrowserRouter>
+      <MainComponent />
+      </BrowserRouter>
+   
     </div>
   );
 }

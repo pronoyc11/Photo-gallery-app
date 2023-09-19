@@ -1,0 +1,70 @@
+/* font-selection */
+h2{
+   font-size: 3rem; /*48px,1rem=16px*/
+}
+h4{
+    font-size: 1.3rem;
+}
+span{
+    font-size: 0.9rem;
+}
+#home{
+
+}
+#wellcome-section{
+  text-align: center;
+  padding-top: 40px ;
+  padding-bottom: 20px;
+}
+hr{
+    height: 0.1rem;
+    background-color: white;
+    
+}
+/* photo-browsing-section */
+
+#photo-browsing{
+    text-align: center;
+    padding:10px 0 0 0;
+    height: 100vh;
+}
+.images{
+    margin:4rem 3rem;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+.title{
+    font-family: 'Averia Serif Libre', cursive;
+    color:white;
+    transition:0.5s;
+    font-size:2rem;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    position:absolute;
+}
+.overlay{
+    
+    background: black;
+    position:absolute;
+    opacity: 0.5;
+    transition:0.5s;
+}
+.img-card:hover .overlay{
+   opacity: 0;
+    
+    
+}
+.img-card{
+    transition: all ease-in-out 0.5s;
+    margin:1.5rem;
+    position: relative;
+}
+
+.img-card:hover{
+    transform: scale(1.050);
+   
+}
