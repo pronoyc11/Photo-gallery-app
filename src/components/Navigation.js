@@ -9,7 +9,7 @@ const Navigation = () => {
 
   return (
     <div>
-      <Navbar className="px-3" expand="sm" color="dark" dark style={{backgroundColor:"red"}} >
+      <Navbar className="px-3" expand="sm" color="dark" dark style={{position:"fixed",width:"100%",zIndex:"10",top:"0"}} >
         <NavbarBrand href="/">
           Nature<i>View</i>
         </NavbarBrand>
