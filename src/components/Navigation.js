@@ -13,7 +13,7 @@ const Navigation = () => {
         <NavbarBrand href="/">
           Nature<i>View</i>
         </NavbarBrand>
-        <NavbarToggler onClick={toggleNavbar} className="me-2" />
+        <NavbarToggler onClick={toggleNavbar} className="me-2 text-primary bg-secondary" />
         
         <Collapse isOpen={!collapsed} navbar>
           
