@@ -1,13 +1,53 @@
-import React,{useState} from 'react'
-import { imageLinks } from '../ShowCard/imageDB';
+import React,{useEffect, useState} from 'react';
 import "../../width.css";
 import "../../css/imageRoutesCss/jungle.css";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { connect } from 'react-redux';
+import { categoryRouteEnabling, fetchCategoryImages } from '../../redux/ActionCreator';
+import Loader from '../../components/Loader';
 
-const Waterfalls = ({args}) => {
+
+
+const mapStateToProps = (state)=>{
+  return {
+    imageLoading:state.imageLoading,
+  
+    waterfallLinks:state.waterfallLinks,
+    
+  }
+}
+ const mapDispatchToProps = dispatch =>{
+   return {
+     fetchCategoryImages:()=>{
+    dispatch(fetchCategoryImages());
+  
+     },
+     categoryRouteEnabling:()=>{
+      dispatch(categoryRouteEnabling())
+     }
+   }
+ }
+
+
+const Waterfalls = (props) => {
+
+
+  // if(props.imageLoading){
+  //   console.log("image is loading still")
+  // }else{
+  //   console.log(props.thumbnailImageLinks.categoryImages.waterfallsLinks)
+  // }
+
+
+  useEffect(()=>{
+  
+    
+    props.categoryRouteEnabling();
+   },[])
+     
   const [modal, setModal] = useState(false);
   const [link,setLink] = useState(null)
-
+  
   const toggle = () => setModal(!modal);
   
   const makefaSolid = (e)=>{
@@ -33,7 +73,7 @@ const Waterfalls = ({args}) => {
   </form>
  </div>) ;
 
-  const Photos = imageLinks.categoryImages.waterfallsLinks.map(link=>{
+let photos = props.waterfallLinks.map(link=>{
     return (<div key={new Date()*Math.random()} className='jimg'><img  src={link} alt='jnglePhotos' /><div className='img-overlay'></div><div className='icons'>
        <i onClick={e=>makefaSolid(e)} className="fa-regular fa-heart"></i>
          <i className="fa-regular fa-comment" onClick={(e) =>{ showComentSection(e)}} ></i>
@@ -44,17 +84,21 @@ const Waterfalls = ({args}) => {
      </div>);
    }
    )
+
+
+
+ 
    const style={
-     textAlign:"center",
-     top:"0",
-     height:"100vh"
-   }
+    textAlign:"center",
+    marginTop:"5rem"
+  }
 
 
 
   return (
     <div className='width-body' style={style}>
-        {Photos}
+       {photos}
+        
         <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader >{specificImage}</ModalHeader>
         <ModalBody>
@@ -71,4 +115,4 @@ const Waterfalls = ({args}) => {
   )
 }
 
-export default Waterfalls
+export default connect(mapStateToProps,mapDispatchToProps)(Waterfalls);

@@ -2,10 +2,25 @@ import React from 'react'
 import { Card, CardImg, CardImgOverlay } from 'reactstrap';
 import "../../css/home.css";
 import { Link } from 'react-router-dom';
+import {connect} from "react-redux";
+import { categoryRouteEnabling } from '../../redux/ActionCreator';
+
+const mapDispatchToProps = (dispatch)=>{
+  return{
+    categoryRouteEnabling:()=>{
+      dispatch(categoryRouteEnabling());
+    }
+  }
+}
 
 const ShowCard = (props) => {
+const makeCategoryRouteEnable = ()=>{
+  props.categoryRouteEnabling();
+}
+
+
   return (
-    <Link to={`/${props.category}`}>
+    <Link  onClick={makeCategoryRouteEnable} to={`/${props.category}`}>
            
     <Card className='img-card' style={{
       width:"20rem",
@@ -31,4 +46,4 @@ const ShowCard = (props) => {
   )
 }
 
-export default ShowCard
+export default connect(null,mapDispatchToProps)(ShowCard);

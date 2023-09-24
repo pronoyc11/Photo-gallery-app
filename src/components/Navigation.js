@@ -2,10 +2,36 @@ import React, { useState } from "react";
 import "../App.css";
 import { Collapse, Nav, NavItem, Navbar, NavbarBrand, NavbarToggler } from "reactstrap";
 import { NavLink } from "react-router-dom";
-const Navigation = () => {
+import { connect } from "react-redux";
+
+
+const mapStateToProps = state =>{
+  return {
+    token:state.token
+  }
+}
+
+
+const Navigation = (props) => {
   const [collapsed, setCollapsed] = useState(true);
 
   const toggleNavbar = () => setCollapsed(!collapsed);
+
+let authOptions = null;
+if(props.token !== null){
+  authOptions =  <NavItem>
+  <NavLink className="nav-link" to="/logout">
+    Log out
+  </NavLink>
+</NavItem>
+}else{
+  authOptions =  <NavItem>
+  <NavLink className="nav-link" to="/auth">
+    Sign Up
+  </NavLink>
+</NavItem>
+}
+
 
   return (
     <div>
@@ -31,6 +57,7 @@ const Navigation = () => {
                 Contact
               </NavLink>
             </NavItem>
+          {authOptions}
           </Nav>
         </Collapse>
       </Navbar>
@@ -38,4 +65,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default connect(mapStateToProps)(Navigation);

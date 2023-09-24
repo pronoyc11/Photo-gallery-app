@@ -60,3 +60,6 @@ margin-left: 7rem;
     
 
 }
+.nav-link .active{
+    color:orange;
+}

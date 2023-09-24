@@ -1,14 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../App.css';
 import '../css/home.css';
-import { imageLinks } from './ShowCard/imageDB';
 import ShowCard from './ShowCard/ShowCard';
+import { categoryRouteDisabling, fetchThumbnailImages } from '../redux/ActionCreator';
+import { connect } from 'react-redux';
+import Loader from '../components/Loader';
 
-const Home = () => {
+const mapStateToProps = (state)=>{
+  return {
+    imageLoading:state.imageLoading,
+    thumbnailImageLinks:state.thumbnailImageLinks
+  }
+}
 
-  const showImages = imageLinks.thumbnailImages.map(img=>{
-    return <ShowCard category = {img.category} link={img.link} />
+const mapDispatchToProps = dispatch =>{
+  return {
+    fetchThumbnailImages:()=>{
+      dispatch(fetchThumbnailImages())
+    },
+    categoryRouteDisabling:()=>{
+      dispatch(categoryRouteDisabling());
+    }
+  }
+}
+
+
+const Home = (props) => {
+
+  useEffect(()=>{
+    
+    props.fetchThumbnailImages();
+   
+    props.categoryRouteDisabling();
+    },[])
+    
+let showImages = null;
+if(props.imageLoading){
+showImages = <Loader />
+}else{
+  showImages = props.thumbnailImageLinks.map(img=>{
+    return <ShowCard key={new Date()*Math.random()} category = {img.category} link={img.link} />
   })
+}
+
+ 
 
 
   return (
@@ -32,4 +67,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default connect(mapStateToProps,mapDispatchToProps)(Home);
