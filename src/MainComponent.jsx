@@ -31,7 +31,7 @@ const mapDispatchToProps = dispatch =>{
   }
 }
 const MainComponent = (props) => {
-  console.log(props.currentUserName)
+  
 useEffect(()=>{
 props.authCheck();
 },[])

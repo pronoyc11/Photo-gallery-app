@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { deliverNameCmntPair, deliveryCmntTotheRedux, deliveryTemporaryCmnts, deliveryUsersTotheRedux, postCommentToServer, retreiveAllUsers, retrieveComments } from "../../redux/CommentsActionCreator";
+import { clearTempCmnts, deliverNameCmntPair, deliveryCmntTotheRedux, deliveryTemporaryCmnts, deliveryUsersTotheRedux, postCommentToServer, retreiveAllUsers, retrieveComments } from "../../redux/CommentsActionCreator";
 
 const mapStateToProps = (state) => {
   return {
@@ -21,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     deliveryTemporaryCmnts:(cmnt)=>{
       dispatch(deliveryTemporaryCmnts(cmnt));
+    },
+    clearTempCmnts:()=>{
+      dispatch(clearTempCmnts());
     }
   };
 };
@@ -55,7 +58,8 @@ retreiveAllUsers()
 .catch(err=>console.log(err))
   //retreiving all users ends here.
 
-
+//clearing temp cmnt state
+props.clearTempCmnts();
 
   },[]);
   //local States go here
@@ -106,7 +110,7 @@ if(pairCmnts.length > pairUsers.length){
 }
 
 const theFinalCmnt = theFinalpair.map(pair => {
-  return <div>
+  return <div key={new Date()*Math.random()}>
    <h5>{pair.name}</h5>
    <p>{pair.comment}</p>
 
@@ -122,12 +126,12 @@ const handleSubmit = (e)=>{
   const comment = {sil:props.specificLink,ui:props.userId,specificCmnt:currentCmnt};
 
   //Posting previously done comment to the server
-  // props.deliveryTemporaryCmnts(currentCmnt);
+   props.deliveryTemporaryCmnts(currentCmnt);
   postCommentToServer(comment);
-  // allTemp.push(currentCmnt);
-  // setAllTemp(allTemp);
+  allTemp.push(currentCmnt);
+  setAllTemp(allTemp);
   //clearing the input
-  theFinalpair.push({name:props.currentUserName,comment:currentCmnt});
+  
   
 
 
@@ -135,7 +139,7 @@ const handleSubmit = (e)=>{
 
   e.preventDefault();
 }
-console.log(allTemp)
+
  
 //submit function ends
 //onchange function starts
@@ -143,24 +147,25 @@ const handleChange = (e) =>{
     setCurrentCmnt(e.target.value);
 }
 //onchange function ends
+
+
   return (
     <div>
       <div className="all-comments text-black">
         {theFinalCmnt}
-        {allTemp.map(c=>{
-  return <div>
+    {props.temporaryCmnts.map(c=>{
+  return <div key={new Date()*Math.random()}>
     <h5>{props.currentUserName}</h5>
-    <p>{c}</p>
-  </div>
-})} 
+    <p>{c}</p></div>
+})}
         { currentCmnt===""?null:(
-          <div>
-             <h5>{props.currentUserName}</h5>
-           <p>{currentCmnt}</p>
+          <div className="text-info mb-2">
+             
+           <i>hi <b>{props.currentUserName}</b>, reveal your words about this picture.</i>
           </div>
         )}
       </div>
-      <hr />
+      
       <form onSubmit={e => handleSubmit(e)}>
         <input
           type="text"

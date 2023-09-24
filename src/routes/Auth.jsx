@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import { connect } from "react-redux";
 import { authentication } from "../redux/AuthActionCreator";
 import { categoryRouteDisabling } from "../redux/ActionCreator";
-console.log("hi i am running.")
+
 
 const mapDispatchToprops = dispatch =>{
     return {
@@ -67,7 +67,7 @@ props.categoryRouteDisabling();
         validate,
         onSubmit: values => {
           props.authentication(values.name,values.email,values.password);
-         console.log(mode);
+         
         },
       });
 

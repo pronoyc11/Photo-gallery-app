@@ -24,16 +24,19 @@ export const logOut = ()=>{
   localStorage.removeItem("token");
   localStorage.removeItem("userId");
   localStorage.removeItem("expirationTime");
-  localStorage.removeItem("currentUserName")
+  localStorage.removeItem("currentUserName");
   return {
       type:actionTypes.AUTH_LOGOUT,
 
     }
   
 }
+export const disCurrentUserName = (name)=>dispatch =>{
+  dispatch(setCurrentUserName(name));
+}
 //users.json functions starts here
 export const postUsers = (name,userId) =>{
-  return axios.post(baseUrl+"/users.json",{name:name,userId:userId})
+  axios.post(baseUrl+"/users.json",{name:name,userId:userId});
 }
 
 export const queryUsersForName = (data,latestUserId)=>{
@@ -60,11 +63,12 @@ export const authentication = ( name,email, password) => (dispatch) => {
     password: password,
     returnSecureToken: true,
   };
-console.log(email,name,password);
+
   if (name) {
     url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
     dispatch(setCurrentUserName(name));
     localStorage.setItem("currentUserName",name);
+    console.log(name);
   } else {
     url =
       "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
@@ -82,9 +86,12 @@ let latestUserId = null;
 
       localStorage.setItem("expirationTime", expirationTime);
       dispatch(authSuccess(res.data.idToken, res.data.localId));
+      
       latestUserId = res.data.localId;
       if(name){
-        return postUsers(name,res.data.localId)
+        
+
+        postUsers(name,res.data.localId);
         
       }else{
        return axios.get(baseUrl+"/users.json"); 
@@ -92,8 +99,10 @@ let latestUserId = null;
       }
     })
     .then(res =>{ 
-       
+               if(res){
                 dispatch(setCurrentUserName( queryUsersForName(res.data,latestUserId)));
+               }
+                
   
     })
     .catch((err) =>{ dispatch(authFaild(err.message));console.log(err) });
@@ -113,6 +122,7 @@ export const authCheck = () => dispatch =>{
             dispatch(logOut());
         }else{
             let userId = localStorage.getItem("userId");
+           
             dispatch(setCurrentUserName(localStorage.getItem("currentUserName")));
             dispatch(authSuccess(token,userId));
         }

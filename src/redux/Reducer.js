@@ -15,7 +15,7 @@ const initialState = {
     authMsg:"",
     token:null,
     userId:null,
-    currentUserName:"",
+    currentUserName:null,
     cmntIsLoading:true,
     currentCmnts:[],
     allUsers:[],
@@ -124,11 +124,17 @@ export const imageReducer = (state=initialState,action) =>{
     break;
     case actionTypes.TEMPORARY_CMNTS:
       
-     state.temporaryCmnts.push(action.payload);
+     
         
         return {
            ...state,
-           temporaryCmnts: state.temporaryCmnts
+           temporaryCmnts: state.temporaryCmnts.concat(action.payload)
+        }
+    break;
+    case actionTypes.CLEAR_TEMP_CMNTS:
+        return{
+            ...state,
+            temporaryCmnts:[]
         }
     break;
     case actionTypes.CURRENT_USERNAME:
@@ -137,6 +143,7 @@ export const imageReducer = (state=initialState,action) =>{
             ...state,
             currentUserName:action.payload
         }
+    break;
     default:
     return state;
 

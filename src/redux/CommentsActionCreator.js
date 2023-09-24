@@ -36,3 +36,10 @@ export const deliveryTemporaryCmnts = cmnts => dispatch =>{
 
 
 }
+
+export const clearTempCmnts = ()=>dispatch=>{
+    dispatch({
+        type:actionTypes.CLEAR_TEMP_CMNTS,
+        
+    })
+}
