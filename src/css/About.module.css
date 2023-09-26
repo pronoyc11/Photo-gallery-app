@@ -1,0 +1,26 @@
+#about-section {
+  text-align: center;
+  margin: 3rem 0;
+}
+#about-section p {
+  margin: 2rem auto;
+  width: 50%;
+  line-height: 2rem;
+  line-break: auto;
+}
+#about-section hr {
+  width: 30%;
+  margin: auto;
+  margin-top: 1rem;
+}
+#pg {
+  font-weight: 0.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  bottom: 1rem;
+  border: 1px solid white;
+  border-radius: 1rem;
+  width: 30%;
+  margin: auto;
+  padding: 0.5rem;
+}
