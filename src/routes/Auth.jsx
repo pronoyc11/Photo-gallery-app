@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, FormText, Input, Label } from "reactstrap";
+import { Alert, Badge, Button, Form, FormGroup, FormText, Input, Label } from "reactstrap";
 import { useFormik } from 'formik';
 import { connect } from "react-redux";
-import { authentication } from "../redux/AuthActionCreator";
+import { authentication, clearAuthMsg } from "../redux/AuthActionCreator";
 import { categoryRouteDisabling } from "../redux/ActionCreator";
 
+
+const mapStateToProps = state => {
+  return {
+    authMsg:state.authMsg
+  }
+}
 
 const mapDispatchToprops = dispatch =>{
     return {
@@ -13,6 +19,9 @@ const mapDispatchToprops = dispatch =>{
         },
         categoryRouteDisabling:()=>{
           dispatch(categoryRouteDisabling())
+        },
+        clearAuthMsg:()=>{
+          dispatch(clearAuthMsg())
         }
     }
 }
@@ -24,6 +33,7 @@ const Auth = (props) => {
   const [mode,setMode] = useState("signUp");
 useEffect(()=>{
 props.categoryRouteDisabling();
+props.clearAuthMsg();
 },[])
 
 
@@ -66,7 +76,11 @@ props.categoryRouteDisabling();
         },
         validate,
         onSubmit: values => {
+         if(mode === "signUp"){
           props.authentication(values.name,values.email,values.password);
+         }else{
+          props.authentication(null,values.email,values.password);
+         }
          
         },
       });
@@ -81,6 +95,7 @@ props.categoryRouteDisabling();
         setMode("logIn");
        }else if(mode === "logIn"){
         setMode("signUp");
+        
        }
     }
 
@@ -93,6 +108,10 @@ props.categoryRouteDisabling();
        padding:"3rem"
 
     }}>
+ { props.authMsg !== null?     
+<Alert color="danger">
+  {props.authMsg}
+</Alert>:null}
       <Form onSubmit={formik.handleSubmit}>
     {mode === "signUp" && (  <FormGroup floating>
           <Input
@@ -150,11 +169,11 @@ props.categoryRouteDisabling();
         <br />
        
         <FormText color="white" className="text-white fs-6">
-            Already signed Up? Switch to <Button size="sm" type="button" onClick={changeMode}> {mode === "signUp"?"Log In":"Sign Up"}</Button>
+            {mode==="signUp"?"Already signed Up?":"Didn't sign up yet?"} Switch to <Badge className="fs-6"  type="button" onClick={changeMode}> {mode === "signUp"?"Log In":"Sign Up"}</Badge>
         </FormText>
       </Form>
     </div>
   );
 };
 
-export default connect(null,mapDispatchToprops)(Auth);
+export default connect(mapStateToProps,mapDispatchToprops)(Auth);

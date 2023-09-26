@@ -12,7 +12,7 @@ const initialState = {
     hillLinks:imageLinks.categoryImages.hillsLinks,
     sunsetLinks:imageLinks.categoryImages.sunsetLinks,
     waterfallLinks:imageLinks.categoryImages.waterfallsLinks,
-    authMsg:"",
+    authMsg:null,
     token:null,
     userId:null,
     currentUserName:null,
@@ -137,13 +137,18 @@ export const imageReducer = (state=initialState,action) =>{
             temporaryCmnts:[]
         }
     break;
+    case actionTypes.CLR_AUTH_MSG:
+        return {
+            ...state,
+            authMsg:null
+        }
     case actionTypes.CURRENT_USERNAME:
         
         return {
             ...state,
             currentUserName:action.payload
         }
-    break;
+
     default:
     return state;
 

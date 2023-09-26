@@ -2,6 +2,12 @@ import * as actionTypes from "./ActionTypes";
 import axios from "axios";
 import { baseUrl } from "./baseUrl";
 
+
+export const clearAuthMsg = ()=>dispatch=>{
+    dispatch({
+      type:actionTypes.CLR_AUTH_MSG
+    })
+}
 export const authSuccess = (token, userId) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
@@ -45,13 +51,13 @@ export const queryUsersForName = (data,latestUserId)=>{
                 for(let key in userOBJ){
                   usersArr.push(userOBJ[key]);
                 }  
-                if(usersArr.length>1){
+              
                 
                 let selectedUserName = usersArr.filter(user => user.userId === latestUserId)
                 localStorage.setItem("currentUserName",selectedUserName[0].name);
                 return selectedUserName[0].name;
                
-                }; 
+                
 }
 
 //users.json functions ends here
@@ -105,7 +111,7 @@ let latestUserId = null;
                 
   
     })
-    .catch((err) =>{ dispatch(authFaild(err.message));console.log(err) });
+    .catch((err) =>{ dispatch(authFaild(err.response.data.error.message));console.log(err) });
 };
 
 

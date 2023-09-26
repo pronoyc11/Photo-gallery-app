@@ -105,8 +105,20 @@ if(pairCmnts.length > pairUsers.length){
     }
 
   }
+}else if(pairUsers.length === pairCmnts.length){
+ 
+  for(const key in pairUsers){
+   
+    for(const key1 in pairCmnts ){
+       if(pairCmnts[key1].ui===pairUsers[key].userId){
+       
+        theFinalpair.push({name:pairUsers[key].name,comment:pairCmnts[key1].cmnt})
 
+       }
 
+    }
+
+  }
 }
 
 const theFinalCmnt = theFinalpair.map(pair => {
@@ -132,7 +144,7 @@ const handleSubmit = (e)=>{
   setAllTemp(allTemp);
   //clearing the input
   
-  
+  setCurrentCmnt("");
 
 
   
