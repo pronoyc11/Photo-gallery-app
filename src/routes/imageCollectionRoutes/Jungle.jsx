@@ -98,7 +98,7 @@ if(props.token !== null){
   
   </>
   }else{
-    modalContent = <h1 className='text-warning p-5 text-center'>Please log in to continue!</h1>
+    modalContent = <h1 className='text-warning p-5 text-center'>Please sign up or log in to continue!</h1>
   }
 
 let photos = props.jungleLinks.map(link=>{

@@ -4,14 +4,16 @@ import "../../css/imageRoutesCss/jungle.css";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { connect } from 'react-redux';
 import { categoryRouteEnabling, fetchCategoryImages } from '../../redux/ActionCreator';
-
-
+import ShowComments from '../ShowCard/ShowComments';
 
 const mapStateToProps = (state)=>{
   return {
     imageLoading:state.imageLoading,
     oceanLinks:state.oceanLinks,
-    categoryImageLinks:state.categoryImageLinks
+    currentUserName:state.currentUserName,
+    userId:state.userId,
+    token:state.token
+    
   }
 }
  const mapDispatchToProps = dispatch =>{
@@ -36,13 +38,14 @@ const Oceans = (props) => {
 
 
   useEffect(()=>{
-    props.fetchCategoryImages();
-    props.categoryRouteEnabling();
-   })
+   
+    
+   props.categoryRouteEnabling();
+  },[])
 
   const [modal, setModal] = useState(false);
   const [link,setLink] = useState(null)
-  
+
   const toggle = () => setModal(!modal);
   
   const makefaSolid = (e)=>{
@@ -50,25 +53,56 @@ const Oceans = (props) => {
      e.target.className = theSpecific?"fa-regular fa-heart":"fa-solid fa-heart";
     
   }
+ let modalContent = null;
+
+
+
+
+
   let specificImage = (
     <div>
       <img  style={{height:"90vh",width:"29.2rem"}} src={`${link}`} alt='specificImage' />
     </div>
   )
+
+//Show coment section function starts here.
+
  const showComentSection = (e)=>{
-  setLink(e.target.parentElement.parentElement.firstChild.src)
+ if(props.token !== null){
+  let link = e.target.parentElement.parentElement.firstChild.src
+  setLink(link);
+  toggle();
+ }else{
   toggle();
  }
+ }
+
+
+ //Show comment section function ends here.
  let commentSection =  ( <div className="comment-section">
- <div className="all-comments"></div>
-  <hr />
-  <form>
-  <input type="text" className='form-control' placeholder='write your comment about this picture.' />
-   <button type='submit' className='btn btn-secondary'>Comment</button>
-  </form>
+ <ShowComments specificLink = {link} />
  </div>) ;
 
-  const Photos = props.oceanLinks.map(link=>{
+if(props.token !== null){
+  modalContent = <>
+   <ModalHeader >{specificImage}</ModalHeader>
+         <ModalBody>
+         
+          {commentSection}
+         </ModalBody>
+         <ModalFooter>
+           <Button color="secondary" onClick={toggle}>
+             Cancel
+           </Button>
+         </ModalFooter>
+  
+  </>
+  }else{
+    modalContent = <h1 className='text-warning p-5 text-center'>Please sign up or log in to continue!</h1>
+  }
+  console.log(props)
+
+let photos = props.oceanLinks.map(link=>{
     return (<div key={new Date()*Math.random()} className='jimg'><img  src={link} alt='jnglePhotos' /><div className='img-overlay'></div><div className='icons'>
        <i onClick={e=>makefaSolid(e)} className="fa-regular fa-heart"></i>
          <i className="fa-regular fa-comment" onClick={(e) =>{ showComentSection(e)}} ></i>
@@ -79,6 +113,8 @@ const Oceans = (props) => {
      </div>);
    }
    )
+
+
    const style={
     textAlign:"center",
     marginTop:"5rem"
@@ -89,19 +125,13 @@ const Oceans = (props) => {
   return (
     <div className='width-body' style={style}>
      
-        {Photos}
+        {photos}
         <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader >{specificImage}</ModalHeader>
-        <ModalBody>
-        
-         {commentSection}
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={toggle}>
-            Cancel
-          </Button>
-        </ModalFooter>
-      </Modal>
+        {modalContent}
+
+        </Modal>
+       
+ 
     </div>
   )
 }
