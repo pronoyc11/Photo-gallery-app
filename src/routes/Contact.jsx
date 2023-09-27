@@ -1,6 +1,21 @@
-import React from 'react'
+import React,{ useEffect } from 'react'
+import { categoryRouteDisabling } from "../redux/ActionCreator";
+import { connect } from "react-redux";
 
-const Contact = () => {
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    categoryRouteDisabling:()=>{
+      dispatch(categoryRouteDisabling());
+    }
+  }
+}
+
+
+const Contact = (props) => {
+  
+  useEffect(()=>{
+    props.categoryRouteDisabling();
+  },[])
   return (
     <div className='width-body'>
     
@@ -10,4 +25,4 @@ const Contact = () => {
   )
 }
 
-export default Contact
+export default connect(null,mapDispatchToProps)(Contact)
