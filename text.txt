@@ -1,3 +1,61 @@
 লাইভ কমেন্ট আপডেট করার সময় 
 কমেন্ট এরে রিডাক্স এ এড করে
  তা ডিসপেচেইং এর সময় আপডেট করাকালীন পুশ(arr.push()) ব্যবহার না করে কনকেট(arr.concat()) ব্যবহার করতে হবে।
+ 
+ 
+ 
+ import React, { useRef,useEffect } from 'react';
+import {categoryRouteDisabling} from "../redux/ActionCreator";
+import { Alert, Badge, Button, Form, FormGroup, FormText, Input, Label } from "reactstrap";
+import styles from "../css/Contact.module.css";
+import { connect } from "react-redux";
+import emailjs from '@emailjs/browser';
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    categoryRouteDisabling:()=>{
+      dispatch(categoryRouteDisabling());
+    }
+  }
+}
+const mapStateToProps = state =>{
+  return {
+    currentUserName:state.currentUserName
+  }
+}
+
+const Contact = (props) => {
+  
+  const form = useRef();
+useEffect(()=>{
+ props.categoryRouteDisabling();
+},[])
+const formm = document.getElementById("formm");
+console.log(formm)
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm('contact_service', 'contact_form', formm, 'ay5j2pLir8Dr5xhId')
+      .then((result) => {
+          alert("Email sent successfully.");
+      }, (error) => {
+          alert("unable to send email.");
+      });
+  };
+
+  return (<div id={styles["width"]}>
+  <h2>Contact us</h2>
+    <Form id={styles["formm"]} ref={form} onSubmit={sendEmail}>
+     <Label>Name</Label>
+     <Input type="text" name="user_name" value={props.currentUserName} />
+     
+      <Label>Email</Label>
+      <Input placeholder="write your email to recieve reply from the author.(pronoy) " type="email" name="user_email" required />
+      <Label>Message</Label>
+      <Input type="textarea" name="message" placeholder="your message goes here." required />
+{props.currentUserName?(<Button id={styles["button"]} type="submit">Send</Button>):<Button id={styles["button"]} disabled size="lg" type="submit">Send</Button>}
+<FormText color="white" id={styles["formtext"]}>You can't email to the author without signing up or logging in!</FormText>
+    </Form>
+ </div> );
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);
