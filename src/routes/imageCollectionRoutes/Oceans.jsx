@@ -61,7 +61,7 @@ const Oceans = (props) => {
 
   let specificImage = (
     <div>
-      <img  style={{height:"90vh",width:"29.2rem"}} src={`${link}`} alt='specificImage' />
+      <img  className="img-fluid" src={`${link}`} alt='specificImage' />
     </div>
   )
 
@@ -100,7 +100,7 @@ if(props.token !== null){
   }else{
     modalContent = <h1 className='text-warning p-5 text-center'>Please sign up or log in to continue!</h1>
   }
-  console.log(props)
+  
 
 let photos = props.oceanLinks.map(link=>{
     return (<div key={new Date()*Math.random()} className='jimg'><img className='img-fluid' src={link} alt='jnglePhotos' /><div className='img-overlay'></div><div className='icons'>

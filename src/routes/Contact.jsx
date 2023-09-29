@@ -15,7 +15,8 @@ const mapDispatchToProps = (dispatch)=>{
 }
 const mapStateToProps = state =>{
   return {
-    currentUserName:state.currentUserName
+    currentUserName:state.currentUserName,
+    token:state.token
   }
 }
 
@@ -50,13 +51,13 @@ const formm = document.getElementById("catch");
   marginTop:"1.5rem"
     }}  ref={form} onSubmit={sendEmail}>
      <Label>Name</Label>
-     <Input type="text" name="user_name" value={props.currentUserName} />
+     <Input type="text" name="user_name" value={props.token && props.currentUserName} />
      
       <Label>Email</Label>
       <Input placeholder="write your email to recieve reply from the author.(pronoy) " type="email" name="user_email" required />
       <Label>Message</Label>
       <Input type="textarea" name="message" placeholder="your message goes here." required />
-{props.currentUserName?(<Button id={styles["button"]} type="submit">Send</Button>):<Button id={styles["button"]} disabled size="lg" type="submit">Send</Button>}
+{props.token?(<Button id={styles["button"]} type="submit">Send</Button>):<Button id={styles["button"]} disabled size="lg" type="submit">Send</Button>}
 <FormText color="white" id={styles["formtext"]}>You can't email to the author without signing up or logging in!</FormText>
     </Form>
  </div> );

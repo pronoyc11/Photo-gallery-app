@@ -61,7 +61,7 @@ const Waterfalls = (props) => {
 
   let specificImage = (
     <div>
-      <img  style={{height:"90vh",width:"29.2rem"}} src={`${link}`} alt='specificImage' />
+      <img  className="img-fluid" src={`${link}`} alt='specificImage' />
     </div>
   )
 
