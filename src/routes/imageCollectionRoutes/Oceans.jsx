@@ -103,7 +103,7 @@ if(props.token !== null){
   console.log(props)
 
 let photos = props.oceanLinks.map(link=>{
-    return (<div key={new Date()*Math.random()} className='jimg'><img  src={link} alt='jnglePhotos' /><div className='img-overlay'></div><div className='icons'>
+    return (<div key={new Date()*Math.random()} className='jimg'><img className='img-fluid' src={link} alt='jnglePhotos' /><div className='img-overlay'></div><div className='icons'>
        <i onClick={e=>makefaSolid(e)} className="fa-regular fa-heart"></i>
          <i className="fa-regular fa-comment" onClick={(e) =>{ showComentSection(e)}} ></i>
          <i className="fa-regular fa-share-from-square"></i>

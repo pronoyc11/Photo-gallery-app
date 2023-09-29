@@ -1,7 +1,7 @@
 
  import React, { useRef,useEffect } from 'react';
 import {categoryRouteDisabling} from "../redux/ActionCreator";
-import { Alert, Badge, Button, Form, FormGroup, FormText, Input, Label } from "reactstrap";
+import { Button, Form, FormText, Input, Label } from "reactstrap";
 import styles from "../css/Contact.module.css";
 import { connect } from "react-redux";
 import emailjs from '@emailjs/browser';

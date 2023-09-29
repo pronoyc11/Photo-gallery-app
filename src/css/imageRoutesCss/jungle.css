@@ -36,6 +36,13 @@ transition:0.5s all ease-in-out;
 margin-bottom:1rem;
 margin-left: 7rem;
 }
+@media only screen and (max-width:500px)  {
+   .icons i{
+    margin-bottom:1rem;
+    margin-left: 4.6rem;
+    font-size: 1.6rem;
+   }
+}
 .jimg:hover .icons{
     visibility: visible;
     }
